@@ -1,6 +1,5 @@
 # Coding Exercise
-This is a coding exercise for Statistics, Buckets and Soundex
-Sample data is contained within a csv file with 3 string columns (firstName, lastName, email) and 3 integer columns (age, vantageScore and ficoScore)
+This is a coding exercise for Statistics, Buckets and Soundex. Sample data is contained within a csv file containing 3 string columns (firstName, lastName, email) and 3 integer columns (age, vantageScore and ficoScore)
 
 ## API and Usage
 Run as a Spring Boot application
@@ -11,6 +10,7 @@ Returns the statistics for all the numeric columns from the csv file. The statis
 Request: http://localhost:8080/api/v1/statistics
 
 Sample Response:
+```
 {
 	"statistics": {
 		"numericDistributions": [
@@ -44,6 +44,7 @@ Sample Response:
 		]
 	}
 }
+```
 
 ### *Get Bucket Data*
 Implements Bucketizer by transforming a column of continuous features to a column of feature buckets, where the buckets are specified by users. For this endpoint we will default the buckets to 5. 
@@ -54,7 +55,8 @@ Request: http://localhost:8080/api/v1/bucketdata?columnName={columnName} where c
 
 	e.g. http://localhost:8080/api/v1/bucketdata?columnName=age
 	
-Sample Response:	
+Sample Response:
+```
 {
 	"columnName": "age",
 	"bucketData": [
@@ -85,12 +87,15 @@ Sample Response:
 		}
 	]
 }
+```
 
 Exceptions are provided if the columnName contains non-numeric data or does not exist
+```
 {
 	"errorCode": 400,
 	"ErrorDesc": "Bad Request: Only Numeric Columns are allowed: (age, vantageScore, ficoScore)."
 }
+```
 
 ### *Get Match*
 The Soundex code for a name consists of a letter followed by three numerical digits: the letter is the first letter of the name, and the digits encode the remaining consonants. Refer to https://en.wikipedia.org/wiki/Soundex for further description 
@@ -102,22 +107,29 @@ Request: http://localhost:8080/api/v1/match?columnName={targetColumnName}&name={
 
 	e.g. http://localhost:8080/app/v1/match?columnName=firstName&name=robert
 	
+
 Sample Response:
+```
 {
 	“output”: [“rupert”, “rubin”]
 }
+```
 
 Exceptions are provided if the columnName contains numeric data or does not exist
+```
 {
 	"errorCode": 400,
 	"ErrorDesc": "Bad Request: Only String Columns are allowed: (firstName, lastName, email)"
 }
+```
+
 Exceptions are provided if no records are found
+```
 {
 	"errorCode": 404,
 	"ErrorDesc": "No matches found."
 }
-
+```
 ## Installation
 input data location is specified in application.yml (for the testing purposes it's added to the resources folder)
 
@@ -164,7 +176,8 @@ For application testing please use swagger page  http://localhost:8080/swagger-u
 S. Aroutiouniants
 
 ## Future enhancements
+* General:	Add logging
 * General:	Allow users to have dynamic sets of column data
-* Bucketizer: Allow users to provide number of buckets
+* Bucketizer:   Allow users to provide number of buckets
 * Soundex:	Allow users to provide multiple attributes (e.g. firstName=Dana&lastName=Smythe)
 
