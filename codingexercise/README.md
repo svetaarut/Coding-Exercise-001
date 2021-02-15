@@ -5,7 +5,7 @@ Sample data is contained within a csv file with 3 string columns (firstName, las
 ## API and Usage
 Run as a Spring Boot application
 
-### Get Statistics
+### *Get Statistics*
 Returns the statistics for all the numeric columns from the csv file. The statistics includes min, max, count, distinct count, mean and standard deviation
 
 Request: http://localhost:8080/api/v1/statistics
@@ -45,7 +45,7 @@ Sample Response:
 	}
 }
 
-### Get Bucket Data
+### *Get Bucket Data*
 Implements Bucketizer by transforming a column of continuous features to a column of feature buckets, where the buckets are specified by users. For this endpoint we will default the buckets to 5. 
 
 This endpoint returns the bucketized data only for numeric columns which are passed as a query parameter in the URL. Non-numeric columns shall be considered as bad request.
@@ -92,7 +92,7 @@ Exceptions are provided if the columnName contains non-numeric data or does not 
 	"ErrorDesc": "Bad Request: Only Numeric Columns are allowed: (age, vantageScore, ficoScore)."
 }
 
-### Get Match
+### *Get Match*
 The Soundex code for a name consists of a letter followed by three numerical digits: the letter is the first letter of the name, and the digits encode the remaining consonants. Refer to https://en.wikipedia.org/wiki/Soundex for further description 
 
 Given any string column value as a query parameter, return all the column values which fall within plus or minus 100 range for Soundex codes.
@@ -121,7 +121,7 @@ Exceptions are provided if no records are found
 ## Installation
 input data location is specified in application.yml (for the testing purposes it's added to the resources folder)
 
-### Requirements
+### *Requirements*
 Implemented in Java 8 and tested under Windows 10
 
 ## Testing
@@ -130,7 +130,7 @@ Unit/Integration tests can be run using the maven command: mvn test
 For application testing please use swagger page  http://localhost:8080/swagger-ui.html
 
 ## Assumptions / Implementation Notes
-### Input File
+### *Input File*
 - No bad data in input file 
 	- No strings with internal commas
 	- No negative or non-integer values in numeric columns
@@ -141,10 +141,10 @@ For application testing please use swagger page  http://localhost:8080/swagger-u
 	- No additional columns
 	- Column order matters
 
-### Get Statistics
+### *Get Statistics*
 - Implementation uses Google Guava package (Stats class)
 
-### Get Bucket Data
+### *Get Bucket Data*
 - There are enough numbers provided in the input to create the requested buckets.
   For example, if 5 buckets are requested, all the numbers should not be just 1 or 2. 
 - Bucket Range Labels A - B are to be read as Number >= A and Number < B
@@ -156,7 +156,7 @@ For application testing please use swagger page  http://localhost:8080/swagger-u
   all the bucket labels will have the same range, but that the last bucket endpoint will
   have a number not in the set of data.
 	
-### Get Match 
+### *Get Match*
 - Implementation uses the Apache Commons Codec package (Soundex Class) for Soundex.
 - The Soundex match response should only include distinct values
   
