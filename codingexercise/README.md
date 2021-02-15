@@ -7,7 +7,9 @@ Run as a Spring Boot application
 
 ### Get Statistics
 Returns the statistics for all the numeric columns from the csv file. The statistics includes min, max, count, distinct count, mean and standard deviation
+
 Request: http://localhost:8080/api/v1/statistics
+
 Sample Response:
 {
 	"statistics": {
@@ -44,12 +46,14 @@ Sample Response:
 }
 
 ### Get Bucket Data
-Implements Bucketizer by transforming a column of continuous features to a column of feature buckets, where the buckets are specified by users. 
-For this endpoint we will default the buckets to 5. 
+Implements Bucketizer by transforming a column of continuous features to a column of feature buckets, where the buckets are specified by users. For this endpoint we will default the buckets to 5. 
+
 This endpoint returns the bucketized data only for numeric columns which are passed as a query parameter in the URL. Non-numeric columns shall be considered as bad request.
 
 Request: http://localhost:8080/api/v1/bucketdata?columnName={columnName} where columnName is one of the numeric columns provided above 
+
 	e.g. http://localhost:8080/api/v1/bucketdata?columnName=age
+	
 Sample Response:	
 {
 	"columnName": "age",
@@ -89,13 +93,15 @@ Exceptions are provided if the columnName contains non-numeric data or does not 
 }
 
 ### Get Match
-The Soundex code for a name consists of a letter followed by three numerical digits: the letter is the first letter of the name, and the digits encode the remaining consonants
-Refer to https://en.wikipedia.org/wiki/Soundex for further description 
+The Soundex code for a name consists of a letter followed by three numerical digits: the letter is the first letter of the name, and the digits encode the remaining consonants. Refer to https://en.wikipedia.org/wiki/Soundex for further description 
+
 Given any string column value as a query parameter, return all the column values which fall within plus or minus 100 range for Soundex codes.
 e.g. if the query is for Robert, whose Soundex code is R163, any names that have R with values between and including 63 and 263 and returned.
 
 Request: http://localhost:8080/api/v1/match?columnName={targetColumnName}&name={targetName} where targetColumnName is one of the string columns provided above 
+
 	e.g. http://localhost:8080/app/v1/match?columnName=firstName&name=robert
+	
 Sample Response:
 {
 	“output”: [“rupert”, “rubin”]
@@ -120,6 +126,7 @@ Implemented in Java 8 and tested under Windows 10
 
 ## Testing
 Unit/Integration tests can be run using the maven command: mvn test
+
 For application testing please use swagger page  http://localhost:8080/swagger-ui.html
 
 ## Assumptions / Implementation Notes
@@ -157,7 +164,7 @@ For application testing please use swagger page  http://localhost:8080/swagger-u
 S. Aroutiouniants
 
 ## Future enhancements
-General:	Allow users to have dynamic sets of column data 
-Bucketizer: Allow users to provide number of buckets
-Soundex:	Allow users to provide multiple attributes (e.g. firstName=Dana&lastName=Smythe)
+* General:	Allow users to have dynamic sets of column data
+* Bucketizer: Allow users to provide number of buckets
+* Soundex:	Allow users to provide multiple attributes (e.g. firstName=Dana&lastName=Smythe)
 
